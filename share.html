@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FormulaNest Share Card</title>
+    <meta name="theme-color" content="#0f7a36">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <style>
+        :root {
+            color-scheme: light;
+            --bg-1: #f4f7f1;
+            --bg-2: #e4f0df;
+            --card: rgba(255, 255, 255, 0.88);
+            --text: #12301d;
+            --muted: #506457;
+            --accent: #0f7a36;
+            --accent-2: #1d9a4b;
+            --border: rgba(18, 48, 29, 0.12);
+            --shadow: 0 28px 70px rgba(15, 122, 54, 0.16);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(circle at top left, rgba(15, 122, 54, 0.16), transparent 34%),
+                radial-gradient(circle at right center, rgba(29, 154, 75, 0.12), transparent 28%),
+                linear-gradient(180deg, var(--bg-1), var(--bg-2));
+        }
+
+        .page {
+            width: min(1100px, calc(100vw - 32px));
+            margin: 0 auto;
+            padding: 28px 0 40px;
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 18px;
+            align-items: stretch;
+        }
+
+        .panel {
+            background: var(--card);
+            backdrop-filter: blur(14px);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+        }
+
+        .intro {
+            padding: 28px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: rgba(15, 122, 54, 0.1);
+            color: var(--accent);
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+        }
+
+        h1 {
+            margin: 16px 0 10px;
+            font-size: clamp(2rem, 4vw, 3.6rem);
+            line-height: 1.02;
+        }
+
+        .intro p {
+            margin: 0 0 14px;
+            max-width: 58ch;
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--muted);
+        }
+
+        .quick-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .button,
+        .ghost-button {
+            appearance: none;
+            border: none;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-height: 46px;
+            padding: 0 16px;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 0.96rem;
+            cursor: pointer;
+            transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+        }
+
+        .button {
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            color: white;
+            box-shadow: 0 16px 30px rgba(15, 122, 54, 0.25);
+        }
+
+        .ghost-button {
+            background: rgba(255, 255, 255, 0.78);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .button:hover,
+        .ghost-button:hover {
+            transform: translateY(-1px);
+        }
+
+        .form-card {
+            padding: 22px;
+        }
+
+        .form-grid {
+            display: grid;
+            gap: 14px;
+        }
+
+        .field label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--muted);
+        }
+
+        .field input,
+        .field textarea {
+            width: 100%;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--text);
+            padding: 12px 14px;
+            font: inherit;
+            outline: none;
+        }
+
+        .field textarea {
+            min-height: 112px;
+            resize: vertical;
+        }
+
+        .field input:focus,
+        .field textarea:focus {
+            border-color: rgba(15, 122, 54, 0.5);
+            box-shadow: 0 0 0 4px rgba(15, 122, 54, 0.08);
+        }
+
+        .output {
+            margin-top: 18px;
+            display: grid;
+            gap: 18px;
+            grid-template-columns: 280px 1fr;
+            align-items: start;
+        }
+
+        .qr-box {
+            padding: 18px;
+            background: white;
+            border-radius: 22px;
+            border: 1px solid var(--border);
+            display: grid;
+            place-items: center;
+        }
+
+        .qr-box img {
+            width: 240px;
+            height: 240px;
+            display: block;
+            border-radius: 18px;
+        }
+
+        .share-card {
+            padding: 18px;
+            background: rgba(255, 255, 255, 0.78);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+        }
+
+        .share-card h2 {
+            margin: 0 0 10px;
+            font-size: 1.15rem;
+        }
+
+        .detail-list {
+            display: grid;
+            gap: 10px;
+            margin: 0 0 16px;
+        }
+
+        .detail-item {
+            padding: 12px 14px;
+            border-radius: 14px;
+            background: white;
+            border: 1px solid var(--border);
+        }
+
+        .detail-item span {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--muted);
+            margin-bottom: 3px;
+        }
+
+        .share-link {
+            word-break: break-all;
+            font-size: 0.92rem;
+            line-height: 1.5;
+            padding: 12px 14px;
+            border-radius: 14px;
+            border: 1px dashed rgba(18, 48, 29, 0.18);
+            background: rgba(255, 255, 255, 0.78);
+            color: var(--text);
+        }
+
+        .footer-note {
+            margin-top: 14px;
+            color: var(--muted);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 900px) {
+            .hero,
+            .output {
+                grid-template-columns: 1fr;
+            }
+
+            .qr-box img {
+                width: min(240px, 72vw);
+                height: min(240px, 72vw);
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="page">
+        <section class="hero">
+            <div class="panel intro">
+                <div class="badge">FormulaNest share card</div>
+                <h1>Make one QR that carries the FormulaNest app and your details.</h1>
+                <p>
+                    Fill in the app summary and your details, then copy the link or scan the QR.
+                    The QR points to this page with your information and the app URL included.
+                </p>
+                <p>
+                    For mobile use, open this page from the same Wi‑Fi network as the app server so the generated link stays reachable on your phone.
+                </p>
+                <div class="quick-links">
+                    <a class="button" href="index.html">Open App</a>
+                    <button class="ghost-button" id="copyLinkTop" type="button">Copy Share Link</button>
+                    <button class="ghost-button" id="copyMessageTop" type="button">Copy Share Message</button>
+                    <button class="button" id="sendWhatsAppTop" type="button">Send to WhatsApp</button>
+                </div>
+            </div>
+
+            <div class="panel form-card">
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="nameInput">Name</label>
+                        <input id="nameInput" type="text" placeholder="Your name">
+                    </div>
+                    <div class="field">
+                        <label for="aboutInput">About FormulaNest app</label>
+                        <textarea id="aboutInput" placeholder="A short description of FormulaNest"></textarea>
+                    </div>
+                    <div class="field">
+                        <label for="detailsInput">My details</label>
+                        <textarea id="detailsInput" placeholder="Class, section, phone number, school, or any details you want to share"></textarea>
+                    </div>
+                    <div class="field">
+                        <label for="appLinkInput">App link</label>
+                        <input id="appLinkInput" type="url" placeholder="http://192.168.x.x:3000/index.html?v=67">
+                    </div>
+                    <div class="quick-links">
+                        <button class="button" id="refreshQr" type="button">Update QR</button>
+                        <button class="ghost-button" id="copyLink" type="button">Copy Link</button>
+                        <button class="ghost-button" id="copyMessage" type="button">Copy Message</button>
+                        <button class="button" id="sendWhatsApp" type="button">Send to WhatsApp</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="output">
+            <div class="qr-box panel">
+                <img id="qrImage" alt="QR code preview" src="">
+            </div>
+
+            <div class="share-card panel">
+                <h2>Preview</h2>
+                <div class="detail-list">
+                    <div class="detail-item"><span>Name</span><strong id="previewName">Your name</strong></div>
+                    <div class="detail-item"><span>About FormulaNest</span><div id="previewAbout">FormulaNest app summary.</div></div>
+                    <div class="detail-item"><span>My details</span><div id="previewDetails">Class, contact, or anything you want to share.</div></div>
+                    <div class="detail-item"><span>App link</span><div id="previewAppLink">Open the FormulaNest app here.</div></div>
+                </div>
+                <div class="detail-item">
+                    <span>Share link</span>
+                    <div class="share-link" id="shareLinkText"></div>
+                </div>
+                <div class="detail-item">
+                    <span>Ready-to-send message</span>
+                    <div class="share-link" id="shareMessageText"></div>
+                </div>
+                <p class="footer-note">
+                    If you change the fields, the QR and the link update automatically.
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        function getDefaultAppLink() {
+            if (window.location.origin && window.location.origin !== "null") {
+                return new URL("index.html?v=67", window.location.origin + "/").toString();
+            }
+            return "http://localhost:3000/index.html?v=67";
+        }
+
+        function getWhatsAppNumber() {
+            return "6309767151";
+        }
+
+        const DEFAULT_APP_LINK = getDefaultAppLink();
+        const DEFAULT_NAME = "Ashish";
+        const DEFAULT_ABOUT = "FormulaNest is a Class 6 to 10 formula app that helps students learn formulas in a simple way.";
+        const DEFAULT_DETAILS = "Class, contact, or anything you want to share.";
+
+        const nameInput = document.getElementById("nameInput");
+        const aboutInput = document.getElementById("aboutInput");
+        const detailsInput = document.getElementById("detailsInput");
+        const appLinkInput = document.getElementById("appLinkInput");
+        const qrImage = document.getElementById("qrImage");
+        const shareLinkText = document.getElementById("shareLinkText");
+        const shareMessageText = document.getElementById("shareMessageText");
+        const previewName = document.getElementById("previewName");
+        const previewAbout = document.getElementById("previewAbout");
+        const previewDetails = document.getElementById("previewDetails");
+        const previewAppLink = document.getElementById("previewAppLink");
+
+        function readStateFromUrl() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                name: params.get("name") || "",
+                about: params.get("about") || DEFAULT_ABOUT,
+                details: params.get("details") || "",
+                app: params.get("app") || DEFAULT_APP_LINK
+            };
+        }
+
+        function normalizeState() {
+            return {
+                name: (nameInput.value || "").trim(),
+                about: (aboutInput.value || "").trim(),
+                details: (detailsInput.value || "").trim(),
+                app: (appLinkInput.value || "").trim() || DEFAULT_APP_LINK
+            };
+        }
+
+        function buildShareUrl(state) {
+            const url = new URL(window.location.href);
+            url.searchParams.set("name", state.name);
+            url.searchParams.set("about", state.about);
+            url.searchParams.set("details", state.details);
+            url.searchParams.set("app", state.app);
+            return url.toString();
+        }
+
+        function buildShareMessage(state) {
+            return [
+                "Hi",
+                state.about || DEFAULT_ABOUT,
+                `App link: ${state.app}`,
+                `${state.name || DEFAULT_NAME} thanks`
+            ].join("\n");
+        }
+
+        function buildWhatsAppUrl(message) {
+            const text = encodeURIComponent(message);
+            const number = getWhatsAppNumber().replace(/\D/g, "");
+            return {
+                app: `whatsapp://send?phone=${number}&text=${text}`,
+                web: `https://web.whatsapp.com/send?phone=${number}&text=${text}`,
+                fallback: `https://api.whatsapp.com/send?phone=${number}&text=${text}`
+            };
+        }
+
+        function render() {
+            const state = normalizeState();
+            const shareUrl = buildShareUrl(state);
+
+            previewName.textContent = state.name || DEFAULT_NAME;
+            previewAbout.textContent = state.about || DEFAULT_ABOUT;
+            previewDetails.textContent = state.details || DEFAULT_DETAILS;
+            previewAppLink.textContent = state.app;
+            shareLinkText.textContent = shareUrl;
+            shareMessageText.textContent = buildShareMessage(state);
+
+            const qrUrl = "https://api.qrserver.com/v1/create-qr-code/?size=320x320&margin=12&data=" + encodeURIComponent(shareUrl);
+            qrImage.src = qrUrl;
+            qrImage.alt = "QR code for " + (state.name || "the share link");
+
+            const current = new URL(window.location.href);
+            current.search = new URLSearchParams({
+                name: state.name,
+                about: state.about,
+                details: state.details,
+                app: state.app
+            }).toString();
+            window.history.replaceState({}, "", current.toString());
+        }
+
+        async function copyShareLink() {
+            const url = shareLinkText.textContent || window.location.href;
+            try {
+                await navigator.clipboard.writeText(url);
+            } catch {
+                const temp = document.createElement("textarea");
+                temp.value = url;
+                document.body.appendChild(temp);
+                temp.select();
+                document.execCommand("copy");
+                temp.remove();
+            }
+        }
+
+        async function copyShareMessage() {
+            const message = shareMessageText.textContent || buildShareMessage(normalizeState());
+            try {
+                await navigator.clipboard.writeText(message);
+            } catch {
+                const temp = document.createElement("textarea");
+                temp.value = message;
+                document.body.appendChild(temp);
+                temp.select();
+                document.execCommand("copy");
+                temp.remove();
+            }
+        }
+
+        function sendToWhatsApp() {
+            const message = shareMessageText.textContent || buildShareMessage(normalizeState());
+            const urls = buildWhatsAppUrl(message);
+
+            const appLink = document.createElement("a");
+            appLink.href = urls.app;
+            appLink.rel = "noreferrer noopener";
+            appLink.style.display = "none";
+            document.body.appendChild(appLink);
+            appLink.click();
+            appLink.remove();
+
+            window.setTimeout(function () {
+                window.location.href = urls.web;
+            }, 900);
+
+            window.setTimeout(function () {
+                window.location.href = urls.fallback;
+            }, 2200);
+        }
+
+        const initial = readStateFromUrl();
+        nameInput.value = initial.name;
+        aboutInput.value = initial.about;
+        detailsInput.value = initial.details;
+        appLinkInput.value = initial.app;
+
+        document.getElementById("refreshQr").addEventListener("click", render);
+        document.getElementById("copyLink").addEventListener("click", copyShareLink);
+        document.getElementById("copyLinkTop").addEventListener("click", copyShareLink);
+        document.getElementById("copyMessage").addEventListener("click", copyShareMessage);
+        document.getElementById("copyMessageTop").addEventListener("click", copyShareMessage);
+        document.getElementById("sendWhatsApp").addEventListener("click", sendToWhatsApp);
+        document.getElementById("sendWhatsAppTop").addEventListener("click", sendToWhatsApp);
+        [nameInput, aboutInput, detailsInput, appLinkInput].forEach(function (input) {
+            input.addEventListener("input", render);
+        });
+
+        render();
+    </script>
+</body>
+</html>

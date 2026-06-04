@@ -1,0 +1,57 @@
+/* General Background */
+body {
+    background-color: #1a1a2e;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* The White Box */
+.login-panel {
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    width: 300px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+h2 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+/* Input Fields */
+input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* The Purple Button */
+.sign-in-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #7b61ff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.sign-in-btn:hover {
+    background-color: #6346eb;
+}

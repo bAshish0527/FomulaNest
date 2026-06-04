@@ -1,0 +1,24 @@
+{
+  "name": "FormulaNest 6-10",
+  "short_name": "FormulaNest",
+  "description": "Class-wise Physics, Maths, and Chemistry formulas for classes 6 to 10.",
+  "start_url": "index.html",
+  "scope": ".",
+  "display": "standalone",
+  "background_color": "#f0f0f0",
+  "theme_color": "#0f7a36",
+  "icons": [
+    {
+      "src": "icons/icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

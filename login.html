@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FormulaNest Profile</title>
+    <meta name="theme-color" content="#0f7a36">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="icon" href="icons/icon-192.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="style.css?v=67">
+</head>
+<body class="page-profile">
+    <div class="app-shell">
+        <aside class="side-nav">
+            <div class="side-brand">
+                <img class="side-logo" src="icons/icon-192.svg" alt="FormulaNest logo">
+                <span>FormulaNest</span>
+            </div>
+            <nav class="side-links">
+                <a class="side-link" href="index.html">Home</a>
+                <a class="side-link" href="dashboard.html">Formulas</a>
+                <a class="side-link" href="practice.html">Practice</a>
+                <a class="side-link" href="parent.html">Progress</a>
+                <a class="side-link" href="ai.html">Buddy</a>
+                <a class="side-link active" href="login.html">Profile</a>
+            </nav>
+            <div class="side-card">
+                <div class="side-card-title">Profile</div>
+                <div class="side-card-subtitle">Account details</div>
+            </div>
+            <div class="side-toggle">
+                <label class="toggle-label">Dark mode</label>
+                <input id="dark-mode-toggle" type="checkbox" aria-label="Toggle dark mode">
+            </div>
+        </aside>
+
+        <main class="app-main">
+            <section class="main-hero compact">
+                <div class="hero-text">
+                    <p class="hero-tag">Profile</p>
+                    <h1 class="hero-title">Manage your account and preferences</h1>
+                </div>
+            </section>
+
+            <section class="profile-wrap">
+                <div class="profile-card">
+                    <div class="profile-header">
+                        <div class="profile-avatar">A</div>
+                        <div>
+                            <h2>Ashish</h2>
+                            <p class="profile-email">ashishdiasmanth27@gmail.com (optional)</p>
+                        </div>
+                    </div>
+                    <div class="profile-stats">
+                        <div class="profile-stat">
+                            <span>Class level</span>
+                            <strong>Class 9</strong>
+                        </div>
+                        <div class="profile-stat">
+                            <span>Member since</span>
+                            <strong>May 27</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-card">
+                    <h3>Preferences</h3>
+                    <div class="profile-pref">
+                        <span>Dark mode</span>
+                        <label class="switch">
+                            <input id="pref-dark" type="checkbox" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="profile-pref">
+                        <span>Practice</span>
+                        <label class="switch">
+                            <input id="pref-practice" type="checkbox" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="profile-pref">
+                        <span>Quiz</span>
+                        <label class="switch">
+                            <input id="pref-quiz" type="checkbox" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js?v=67"></script>
+    <script>
+        function initPreferences() {
+            const darkToggle = document.getElementById("pref-dark");
+            if (!darkToggle) {
+                return;
+            }
+
+            const themeApi = window.FormulaNestTheme;
+            if (themeApi) {
+                darkToggle.checked = themeApi.getStoredDarkMode();
+                themeApi.applyThemeFromStorage();
+                darkToggle.addEventListener("change", function () {
+                    themeApi.setDarkModePreference(darkToggle.checked);
+                });
+                return;
+            }
+
+            const saved = localStorage.getItem("formulanestDarkMode");
+            const isDark = saved === null ? true : saved === "true";
+            darkToggle.checked = isDark;
+            document.body.classList.toggle("light-theme", !isDark);
+            darkToggle.addEventListener("change", function () {
+                localStorage.setItem("formulanestDarkMode", String(darkToggle.checked));
+                document.body.classList.toggle("light-theme", !darkToggle.checked);
+            });
+        }
+
+        initPreferences();
+    </script>
+</body>
+</html>

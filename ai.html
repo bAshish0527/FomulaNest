@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buddy - FormulaNest AI</title>
+    <meta name="theme-color" content="#0f7a36">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="icon" href="icons/icon-192.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="style.css?v=67">
+</head>
+
+<body class="page-ai">
+    <div class="app-shell">
+        <aside class="side-nav">
+            <div class="side-brand">
+                <img class="side-logo" src="icons/icon-192.svg" alt="FormulaNest logo">
+                <span>FormulaNest</span>
+            </div>
+            <nav class="side-links">
+                <a class="side-link" href="index.html">Home</a>
+                <a class="side-link" href="dashboard.html">Formulas</a>
+                <a class="side-link" href="practice.html">Practice</a>
+                <a class="side-link" href="parent.html">Progress</a>
+                <a class="side-link active" href="ai.html">Buddy</a>
+                <a class="side-link" href="login.html">Profile</a>
+            </nav>
+            <div class="side-card">
+                <div class="side-card-title">Buddy</div>
+                <div class="side-card-subtitle">Ask anything</div>
+            </div>
+            <div class="side-toggle">
+                <label class="toggle-label">Dark mode</label>
+                <input id="dark-mode-toggle" type="checkbox" aria-label="Toggle dark mode">
+            </div>
+        </aside>
+
+        <main class="app-main">
+            <section class="main-hero compact">
+                <div class="hero-text">
+                    <p class="hero-tag">Buddy</p>
+                    <h1 class="hero-title">Ask doubts. Get instant help.</h1>
+                    <p class="hero-subtitle">Formula explanations, steps, and quick answers in one place.</p>
+                </div>
+            </section>
+
+            <section class="chat-panel">
+                <form id="api-key-form" class="chat-input">
+                    <input id="openrouter-key" type="password" placeholder="Paste OpenRouter API key" autocomplete="off">
+                    <button type="submit">Save key</button>
+                </form>
+                <div id="chat-messages" class="chat-messages"></div>
+                <form id="chat-form" class="chat-input">
+                    <input id="chat-text" type="text" placeholder="Ask a question..." autocomplete="off">
+                    <button type="submit">Send</button>
+                </form>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js?v=67"></script>
+    <script>
+        const messagesEl = document.getElementById("chat-messages");
+        const formEl = document.getElementById("chat-form");
+        const inputEl = document.getElementById("chat-text");
+        const apiKeyFormEl = document.getElementById("api-key-form");
+        const apiKeyInputEl = document.getElementById("openrouter-key");
+        const apiKeyStorageKey = "formulanestOpenRouterKey";
+        const chatHistory = [];
+
+        function addBubble(text, role) {
+            const bubble = document.createElement("div");
+            bubble.className = `chat-bubble ${role}`;
+            bubble.textContent = text;
+            messagesEl.appendChild(bubble);
+            messagesEl.scrollTop = messagesEl.scrollHeight;
+        }
+
+        function getStoredApiKey() {
+            return localStorage.getItem(apiKeyStorageKey) || "";
+        }
+
+        function hideApiKeyForm() {
+            apiKeyFormEl.style.display = "none";
+        }
+
+        if (getStoredApiKey()) {
+            hideApiKeyForm();
+        }
+
+        apiKeyFormEl.addEventListener("submit", function (event) {
+            event.preventDefault();
+            const apiKey = apiKeyInputEl.value.trim();
+            if (!apiKey) {
+                localStorage.removeItem(apiKeyStorageKey);
+                return;
+            }
+            localStorage.setItem(apiKeyStorageKey, apiKey);
+            apiKeyInputEl.value = "";
+            hideApiKeyForm();
+        });
+
+        async function sendMessage(text) {
+            addBubble(text, "user");
+            chatHistory.push({ role: "user", content: text });
+
+            const apiKey = getStoredApiKey();
+            const payload = {
+                messages: [{ role: "system", content: "You are FormulaNest AI. Help with formulas, steps, and doubts." }, ...chatHistory]
+            };
+            if (apiKey) {
+                payload.apiKey = apiKey;
+            }
+
+            try {
+                const res = await fetch("/api/chat", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await res.json().catch(() => ({}));
+                if (!res.ok) {
+                    throw new Error(data.error || "AI request failed.");
+                }
+
+                addBubble(data.content, "assistant");
+                chatHistory.push({ role: "assistant", content: data.content });
+            } catch (error) {
+                addBubble(error && error.message ? error.message : "AI is unavailable. Check server API key settings.", "assistant");
+            }
+        }
+
+        formEl.addEventListener("submit", function (event) {
+            event.preventDefault();
+            const text = inputEl.value.trim();
+            if (!text) return;
+            inputEl.value = "";
+            sendMessage(text);
+        });
+    </script>
+</body>
+</html>

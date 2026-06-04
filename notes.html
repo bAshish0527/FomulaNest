@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FormulaNest</title>
+    <meta name="theme-color" content="#0f7a36">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="icon" href="icons/icon-192.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="style.css?v=67">
+</head>
+
+<body class="page-notes notes-page">
+    <div class="app-shell">
+        <aside class="side-nav">
+            <div class="side-brand">
+                <img class="side-logo" src="icons/icon-192.svg" alt="FormulaNest logo">
+                <span>FormulaNest</span>
+            </div>
+            <nav class="side-links">
+                <a class="side-link" href="index.html">Home</a>
+                <a class="side-link" href="dashboard.html">Formulas</a>
+                <a class="side-link" href="practice.html">Practice</a>
+                <a class="side-link" href="parent.html">Progress</a>
+                <a class="side-link" href="ai.html">Buddy</a>
+                <a class="side-link" href="login.html">Profile</a>
+            </nav>
+            <div class="side-card">
+                <div class="side-card-title">Notes</div>
+                <div class="side-card-subtitle">Class wise formulas</div>
+            </div>
+            <div class="side-toggle">
+                <label class="toggle-label">Dark mode</label>
+                <input id="dark-mode-toggle" type="checkbox" aria-label="Toggle dark mode">
+            </div>
+        </aside>
+
+        <main class="app-main">
+            <header class="notes-top">
+                <a class="back-link" href="dashboard.html">Back</a>
+                <div class="notes-brand">
+                    <img class="brand-logo small" src="icons/icon-192.svg" alt="FormulaNest logo">
+                    <h1 id="page-title">FormulaNest</h1>
+                </div>
+            </header>
+
+            <section class="subject-tabs" aria-label="Subjects">
+                <button class="subject-btn" onclick="showNotes('physics')">Physics</button>
+                <button class="subject-btn" onclick="showNotes('maths')">Maths</button>
+                <button class="subject-btn" onclick="showNotes('chemistry')">Chemistry</button>
+                <button id="quiz-btn" class="subject-btn" onclick="startQuiz()">Quiz</button>
+                <button id="exam-btn" class="subject-btn" onclick="startExamMode()">Exam Mode</button>
+                <button class="subject-btn" onclick="showNotes('calculator')">Calculator</button>
+            </section>
+
+            <section class="notes-tools">
+                <div class="view-mode-toggle" aria-label="View mode">
+                    <button id="mode-normal" class="mode-btn" onclick="setViewMode('normal')">Normal</button>
+                    <button id="mode-attractive" class="mode-btn" onclick="setViewMode('attractive')">Attractive</button>
+                </div>
+                <div class="voice-controls" aria-label="Voice formulas">
+                    <button class="voice-btn" onclick="startFormulaVoice()">Listen</button>
+                    <button class="voice-btn secondary" onclick="stopFormulaVoice()">Stop</button>
+                    <span class="voice-hint">Voice reads formulas aloud.</span>
+                </div>
+            </section>
+
+            <p id="notes-quote" class="context-quote">"Choose a subject, and turn formulas into confidence."</p>
+
+            <section class="notes-layout" aria-label="Notes workspace">
+                <div class="chat-center">
+                    <main id="content" class="content-card chat-box" aria-label="Chat box">
+                        <p>Tap a subject to view formulas for this class.</p>
+                    </main>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js?v=67"></script>
+
+</body>
+</html>

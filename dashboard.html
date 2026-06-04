@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FormulaNest Dashboard</title>
+    <meta name="theme-color" content="#0f7a36">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="icon" href="icons/icon-192.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="style.css?v=67">
+</head>
+
+<body class="page-dashboard">
+    <div class="app-shell">
+        <aside class="side-nav">
+            <div class="side-brand">
+                <img class="side-logo" src="icons/icon-192.svg" alt="FormulaNest logo">
+                <span>FormulaNest</span>
+            </div>
+            <nav class="side-links">
+                <a class="side-link" href="index.html">Home</a>
+                <a class="side-link active" href="dashboard.html">Formulas</a>
+                <a class="side-link" href="practice.html">Practice</a>
+                <a class="side-link" href="parent.html">Progress</a>
+                <a class="side-link" href="ai.html">Buddy</a>
+                <a class="side-link" href="login.html">Profile</a>
+            </nav>
+            <div class="side-card">
+                <div class="side-card-title">Classes</div>
+                <div class="side-card-subtitle">6 to 10</div>
+            </div>
+            <div class="side-toggle">
+                <label class="toggle-label">Dark mode</label>
+                <input id="dark-mode-toggle" type="checkbox" aria-label="Toggle dark mode">
+            </div>
+        </aside>
+
+        <main class="app-main">
+            <section class="main-hero compact">
+                <div class="hero-text">
+                    <p class="hero-tag">Class dashboard</p>
+                    <h1 class="hero-title">Select your class to continue</h1>
+                    <p class="hero-subtitle">Pick a class to open formulas, practice, and quizzes.</p>
+                </div>
+            </section>
+
+            <section class="quick-access">
+                <h2>Class shortcuts</h2>
+                <div class="quick-grid">
+                    <div class="quick-card class-subject-card">
+                        <h3>Class 6</h3>
+                        <p>Starter formulas and basics.</p>
+                        <button class="open-class-btn" onclick="openClassPage(6)">Open Class 6</button>
+                    </div>
+                    <div class="quick-card class-subject-card">
+                        <h3>Class 7</h3>
+                        <p>Build speed and accuracy.</p>
+                        <button class="open-class-btn" onclick="openClassPage(7)">Open Class 7</button>
+                    </div>
+                    <div class="quick-card class-subject-card">
+                        <h3>Class 8</h3>
+                        <p>Stronger core concepts.</p>
+                        <button class="open-class-btn" onclick="openClassPage(8)">Open Class 8</button>
+                    </div>
+                    <div class="quick-card class-subject-card">
+                        <h3>Class 9</h3>
+                        <p>Foundation for board prep.</p>
+                        <button class="open-class-btn" onclick="openClassPage(9)">Open Class 9</button>
+                    </div>
+                    <div class="quick-card class-subject-card">
+                        <h3>Class 10</h3>
+                        <p>Exam focus and revision.</p>
+                        <button class="open-class-btn" onclick="openClassPage(10)">Open Class 10</button>
+                    </div>
+                    <button class="quick-card" onclick="openParentView()">
+                        <h3>Parent View</h3>
+                        <p>Track recent activity.</p>
+                    </button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js?v=67"></script>
+
+</body>
+</html>
