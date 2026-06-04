@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="FormulaNest app icon">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#14b8a6"/>
+      <stop offset="100%" stop-color="#2563eb"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="512" height="512" rx="96" fill="url(#bg)"/>
+  <path d="M256 104 L364 165 L364 290 L256 355 L148 290 L148 165 Z" fill="#e2e8f0"/>
+  <path d="M256 137 L332 180 L332 259 L256 302 L180 259 L180 180 Z" fill="#0f172a"/>
+  <path d="M216 223h80M256 183v80" stroke="#14b8a6" stroke-width="18" stroke-linecap="round"/>
+  <circle cx="256" cy="357" r="27" fill="#fbbf24"/>
+</svg>
