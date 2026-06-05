@@ -533,10 +533,10 @@ function initSharePanel() {
     const PUBLIC_SHARE_KEY = "formulanestPublicShareLink";
 
     function getBaseUrl(path) {
-        const base = window.location.origin && window.location.origin !== "null"
-            ? window.location.origin
-            : "http://localhost:3000";
-        return `${base}/${path}`;
+        if (!window.location.origin || window.location.origin === "null") {
+            return new URL(path, "http://localhost:3000/").toString();
+        }
+        return new URL(path, window.location.href).toString();
     }
 
     function getPublicBaseUrl() {
@@ -550,7 +550,10 @@ function initSharePanel() {
             if (url.protocol !== "https:" && url.protocol !== "http:") {
                 return "";
             }
-            return url.origin;
+            if (/\.[a-z0-9]+$/i.test(url.pathname)) {
+                return new URL("./", url.href).toString();
+            }
+            return `${url.origin}${url.pathname.replace(/\/$/, "")}/`;
         } catch (error) {
             return "";
         }
@@ -559,7 +562,7 @@ function initSharePanel() {
     function getShareUrl(path) {
         const publicBase = getPublicBaseUrl();
         if (publicBase) {
-            return `${publicBase}/${path}`;
+            return new URL(path, publicBase).toString();
         }
         return getBaseUrl(path);
     }

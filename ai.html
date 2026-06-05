@@ -60,7 +60,7 @@
         </main>
     </div>
 
-    <script src="script.js?v=67"></script>
+    <script src="script.js?v=71"></script>
     <script>
         const messagesEl = document.getElementById("chat-messages");
         const formEl = document.getElementById("chat-form");
@@ -86,6 +86,10 @@
             apiKeyFormEl.style.display = "none";
         }
 
+        function isGitHubPagesHost() {
+            return window.location.hostname.endsWith("github.io");
+        }
+
         if (getStoredApiKey()) {
             hideApiKeyForm();
         }
@@ -108,28 +112,54 @@
 
             const apiKey = getStoredApiKey();
             const payload = {
-                messages: [{ role: "system", content: "You are FormulaNest AI. Help with formulas, steps, and doubts." }, ...chatHistory]
+                model: "meta-llama/llama-3.1-8b-instruct",
+                messages: [{ role: "system", content: "You are FormulaNest AI. Help with formulas, steps, and doubts." }, ...chatHistory],
+                temperature: 0.7,
+                max_tokens: 600
             };
-            if (apiKey) {
-                payload.apiKey = apiKey;
-            }
 
             try {
-                const res = await fetch("/api/chat", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(payload)
-                });
+                let res;
+                if (apiKey) {
+                    res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+                        method: "POST",
+                        headers: {
+                            "Authorization": `Bearer ${apiKey}`,
+                            "Content-Type": "application/json",
+                            "HTTP-Referer": window.location.origin || "https://bashish0527.github.io",
+                            "X-Title": "FormulaNest"
+                        },
+                        body: JSON.stringify(payload)
+                    });
+                } else {
+                    if (isGitHubPagesHost()) {
+                        throw new Error("Paste an OpenRouter API key first, then send your question again.");
+                    }
+                    res = await fetch("/api/chat", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(payload)
+                    });
+                }
 
                 const data = await res.json().catch(() => ({}));
                 if (!res.ok) {
-                    throw new Error(data.error || "AI request failed.");
+                    const detail = data.error && data.error.message ? data.error.message : data.error;
+                    throw new Error(detail || "AI request failed.");
                 }
 
-                addBubble(data.content, "assistant");
-                chatHistory.push({ role: "assistant", content: data.content });
+                const content = apiKey
+                    ? data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content
+                    : data.content;
+
+                if (!content) {
+                    throw new Error("AI response was empty.");
+                }
+
+                addBubble(content, "assistant");
+                chatHistory.push({ role: "assistant", content });
             } catch (error) {
-                addBubble(error && error.message ? error.message : "AI is unavailable. Check server API key settings.", "assistant");
+                addBubble(error && error.message ? error.message : "AI is unavailable. Paste an OpenRouter API key and try again.", "assistant");
             }
         }
 

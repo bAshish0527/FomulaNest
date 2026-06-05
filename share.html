@@ -336,9 +336,9 @@
     <script>
         function getDefaultAppLink() {
             if (window.location.origin && window.location.origin !== "null") {
-                return new URL("index.html?v=67", window.location.origin + "/").toString();
+                return new URL("index.html?v=71", window.location.href).toString();
             }
-            return "http://localhost:3000/index.html?v=67";
+            return "http://localhost:3000/index.html?v=71";
         }
 
         function getWhatsAppNumber() {
