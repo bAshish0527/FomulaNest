@@ -2,10 +2,11 @@ const CACHE_NAME = "formulanest-cache-v10";
 const ASSETS_TO_CACHE = [
   "./",
   "index.html",
+  "app.html",
   "dashboard.html",
   "notes.html",
-  "style.css?v=67",
-  "script.js?v=67",
+  "style.css?v=73",
+  "script.js?v=71",
   "manifest.webmanifest",
   "icons/formulanest-logo.svg",
   "icons/icon-192.svg",

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FormulaNest</title>
+    <meta name="theme-color" content="#0f7a36">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="icon" href="icons/icon-192.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="style.css?v=73">
+</head>
+
+<body class="page-home">
+    <div class="app-shell">
+        <aside class="side-nav">
+            <div class="side-brand">
+                <img class="side-logo" src="icons/icon-192.svg" alt="FormulaNest logo">
+                <span>FormulaNest</span>
+            </div>
+            <nav class="side-links">
+                <a class="side-link active" href="app.html">Home</a>
+                <a class="side-link" href="dashboard.html">Formulas</a>
+                <a class="side-link" href="practice.html">Practice</a>
+                <a class="side-link" href="parent.html">Progress</a>
+                <a class="side-link" href="ai.html">Buddy</a>
+                <a class="side-link" href="login.html">Profile</a>
+            </nav>
+            <div class="side-card">
+                <div class="side-card-title">Class 6</div>
+                <div class="side-card-subtitle">Beginner</div>
+            </div>
+            <div class="side-toggle">
+                <label class="toggle-label">Dark mode</label>
+                <input id="dark-mode-toggle" type="checkbox" aria-label="Toggle dark mode">
+            </div>
+        </aside>
+
+        <main class="app-main">
+            <section class="main-hero">
+                <div class="hero-text">
+                    <p class="hero-tag">FormulaNest</p>
+                    <h1 class="hero-title">Master formulas, ace your exams</h1>
+                    <p class="hero-subtitle">
+                        Learn and practice essential formulas across Physics, Chemistry, and Maths
+                        with interactive quizzes and personalized progress tracking.
+                    </p>
+                    <div class="hero-actions">
+                        <a class="primary-btn" href="login.html">Explore formulas</a>
+                        <a class="ghost-btn" href="dashboard.html">Open class dashboard</a>
+                    </div>
+                </div>
+                <div class="hero-panel">
+                    <div class="hero-panel-card">
+                        <h3>Daily Formula Path</h3>
+                        <p>Short, focused sessions that build consistency.</p>
+                        <div class="hero-stats">
+                            <div>
+                                <span>Classes</span>
+                                <strong>6 to 10</strong>
+                            </div>
+                            <div>
+                                <span>Subjects</span>
+                                <strong>3 Core</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="quick-access">
+                <h2>Quick access</h2>
+                <div class="quick-grid">
+                    <a class="quick-card" href="notes.html?class=6&quiz=1&daily=1">
+                        <h3>Daily 5</h3>
+                        <p>Five quick questions to start your day.</p>
+                    </a>
+                    <button class="quick-card share-card" type="button" id="share-open-btn">
+                        <h3>Share FormulaNest</h3>
+                        <p>Send the app, a practice invite, or a progress report with one link.</p>
+                        <span class="share-hint">Open share</span>
+                    </button>
+                    <a class="quick-card" href="dashboard.html">
+                        <h3>Browse formulas</h3>
+                        <p>Explore formulas across all subjects.</p>
+                    </a>
+                    <a class="quick-card" href="practice.html">
+                        <h3>Start practice</h3>
+                        <p>Test your knowledge with quizzes.</p>
+                    </a>
+                    <a class="quick-card" href="parent.html">
+                        <h3>View progress</h3>
+                        <p>Track learning streaks and results.</p>
+                    </a>
+                </div>
+            </section>
+
+            <div id="share-dialog" class="share-dialog" aria-hidden="true">
+                <div class="share-card-panel">
+                    <div class="share-card-head">
+                        <h3>Share FormulaNest</h3>
+                        <button class="share-close" type="button" id="share-close-btn">Close</button>
+                    </div>
+                    <p>Paste a public tunnel link to share outside your Wi-Fi, or use the local link for nearby devices.</p>
+                    <div class="share-public-field">
+                        <label for="share-public-link">Public link</label>
+                        <input id="share-public-link" class="share-link" type="url" placeholder="https://your-link.trycloudflare.com">
+                    </div>
+                    <div class="share-mode-list" aria-label="Share type">
+                        <button class="share-mode is-active" type="button" data-share-mode="app">App link</button>
+                        <button class="share-mode" type="button" data-share-mode="practice">Practice invite</button>
+                        <button class="share-mode" type="button" data-share-mode="progress">Progress report</button>
+                    </div>
+                    <div class="share-row">
+                        <input id="share-link" class="share-link" type="text" readonly>
+                        <button class="share-copy" type="button" id="share-copy-btn">Copy</button>
+                    </div>
+                    <textarea id="share-message" class="share-message" readonly></textarea>
+                    <div class="share-actions">
+                        <button class="share-copy secondary" type="button" id="share-message-copy-btn">Copy Message</button>
+                        <button class="share-copy secondary" type="button" id="share-whatsapp-btn">WhatsApp</button>
+                        <button class="share-copy secondary" type="button" id="share-progress-card-btn">Save Card</button>
+                        <a class="share-copy secondary" id="share-card-page-link" href="share.html">QR Card</a>
+                    </div>
+                    <div id="share-progress-card-preview" class="share-progress-card-preview" hidden>
+                        <canvas id="share-progress-card-canvas" width="1080" height="1350" aria-label="Progress report card preview"></canvas>
+                        <span>Progress card preview</span>
+                    </div>
+                    <div class="share-qr-wrap">
+                        <img id="share-qr" alt="FormulaNest QR code" loading="lazy">
+                        <span class="share-qr-label">Scan to open</span>
+                    </div>
+                </div>
+            </div>
+
+            <section class="value-prop">
+                <div class="value-head">
+                    <h2>Why FormulaNest</h2>
+                    <p>Everything students need to revise faster, stay focused, and feel confident.</p>
+                </div>
+                <div class="value-grid">
+                    <article class="value-card">
+                        <h3>Curated syllabus</h3>
+                        <p>Class-wise formulas and definitions in one clean, distraction-free flow.</p>
+                    </article>
+                    <article class="value-card">
+                        <h3>Offline ready</h3>
+                        <p>Works on local Wi-Fi and keeps lessons available even with weak internet.</p>
+                    </article>
+                    <article class="value-card">
+                        <h3>Practice built-in</h3>
+                        <p>Quizzes, weak-topic revision, and progress insights help students improve fast.</p>
+                    </article>
+                    <article class="value-card">
+                        <h3>Buddy support</h3>
+                        <p>AI Study Buddy explains concepts in simple language when students feel stuck.</p>
+                    </article>
+                </div>
+            </section>
+
+            <div class="site-credit">Built by Ashish</div>
+        </main>
+    </div>
+
+    <script src="script.js?v=71"></script>
+
+</body>
+</html>
